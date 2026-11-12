@@ -155,6 +155,7 @@ then
 fi
 
 CANDIDATES=(
+  "${CLAUDE_SKILL_DIR}/scripts/extract.py"  # Claude plugin: the skill's own directory
   "$HOME/.copilot/skills/book-to-skill/scripts/extract.py"
   "$HOME/.agents/skills/book-to-skill/scripts/extract.py"
   "$HOME/.claude/skills/book-to-skill/scripts/extract.py"

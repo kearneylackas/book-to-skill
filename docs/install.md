@@ -18,6 +18,14 @@ npx skills add virgiliojr94/book-to-skill
 
 Prefer a manual install? Every per-host `git clone` path below works exactly the same.
 
+**Claude desktop app (plugin zip)**: build the plugin archive from a checkout, then upload `dist/book-to-skill.plugin` (a plain zip) in the desktop app's plugin settings:
+
+```bash
+python3 tools/build_plugin.py
+```
+
+The archive bundles `SKILL.md`, the extractor and `tools/` under `skills/book-to-skill/`, and the skill finds its own extractor through `${CLAUDE_SKILL_DIR}`. `python3` must be available on the machine that runs the skill.
+
 **GitHub Copilot CLI** (personal skill):
 
 ```bash

@@ -155,6 +155,8 @@ then
 fi
 
 CANDIDATES=(
+  "${CLAUDE_SKILL_DIR}/scripts/extract.py"
+  "$HOME/.claude/plugins/cache"/*/book-to-skill/*/scripts/extract.py
   "$HOME/.copilot/skills/book-to-skill/scripts/extract.py"
   "$HOME/.agents/skills/book-to-skill/scripts/extract.py"
   "$HOME/.claude/skills/book-to-skill/scripts/extract.py"

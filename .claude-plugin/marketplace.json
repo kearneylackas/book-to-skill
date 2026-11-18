@@ -1,0 +1,23 @@
+{
+  "name": "book-to-skill",
+  "owner": {
+    "name": "kearneylackas",
+    "url": "https://github.com/kearneylackas"
+  },
+  "description": "book-to-skill as an installable Claude plugin: turn books and documents into on-demand agent skills.",
+  "plugins": [
+    {
+      "name": "book-to-skill",
+      "source": "./",
+      "description": "Convert books and documents into structured, on-demand agent skills.",
+      "category": "productivity",
+      "keywords": [
+        "books",
+        "pdf",
+        "epub",
+        "knowledge",
+        "skills"
+      ]
+    }
+  ]
+}

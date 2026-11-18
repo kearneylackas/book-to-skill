@@ -16,6 +16,13 @@ The skill follows the open [Agent Skills](https://github.com/agentskills/agentsk
 npx skills add virgiliojr94/book-to-skill
 ```
 
+**Claude Desktop / Claude Code plugin marketplace** — this repository is also a plugin marketplace. In Claude Desktop, add the marketplace `kearneylackas/book-to-skill` from the plugin settings and install **book-to-skill**; in Claude Code:
+
+```bash
+claude plugin marketplace add kearneylackas/book-to-skill
+claude plugin install book-to-skill@book-to-skill
+```
+
 Prefer a manual install? Every per-host `git clone` path below works exactly the same.
 
 **GitHub Copilot CLI** (personal skill):

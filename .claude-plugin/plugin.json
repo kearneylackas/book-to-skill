@@ -1,0 +1,22 @@
+{
+  "name": "book-to-skill",
+  "description": "Convert books and documents (PDF, EPUB, DOCX, HTML, Markdown, text, RTF, MOBI/AZW) into structured, on-demand agent skills.",
+  "author": {
+    "name": "virgiliojr94",
+    "url": "https://github.com/virgiliojr94"
+  },
+  "homepage": "https://github.com/virgiliojr94/book-to-skill",
+  "repository": "https://github.com/virgiliojr94/book-to-skill",
+  "license": "MIT",
+  "keywords": [
+    "books",
+    "pdf",
+    "epub",
+    "knowledge",
+    "skills",
+    "extraction"
+  ],
+  "skills": [
+    "./"
+  ]
+}

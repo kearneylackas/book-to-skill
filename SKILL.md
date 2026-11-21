@@ -61,7 +61,7 @@ Four paths available. Route based on what the user asks:
 
 ### 4. Update / Fold-in (Existing Skill)
 **Trigger:** User provides one or more new source paths and indicates they want to update an existing skill (either by pointing to the existing skill folder, providing a skill slug that already exists in `SKILLS_HOME`, or explicitly requesting an update).
-**Action:** Run Step 0 (out-of-scope check), Step 1 (validate inputs), Step 1.5 (identify book type), and Step 2 (extract new files). Then skip to Step 5 (identify/detect existing skill path) and run the **Update / Fold-in Workflow** to merge the new content into the existing skill files.
+**Action:** Run Step 0 (out-of-scope check), Step 0.5 (possession confirmation), Step 1 (validate inputs), Step 1.5 (identify book type), and Step 2 (extract new files). Then skip to Step 5 (identify/detect existing skill path) and run the **Update / Fold-in Workflow** to merge the new content into the existing skill files.
 **Output:** Updated existing skill with new/revised chapter summaries and merged indexes/glossaries.
 
 ---
@@ -101,6 +101,24 @@ Throughout the workflow:
 - Treat all other arguments as the list of `INPUT_PATHS`.
 - If any input path is an existing skill directory (contains `SKILL.md` and a `chapters/` sub-folder), or if `SKILL_NAME` matches an existing skill slug in the resolved root, flag this run as an **Update/Fold-in** operation (Mode 4).
 - **Re-run guard.** Before starting extraction for a Full Conversion, derive the prospective skill slug under Step 5's naming options — the author-concept form, the by-title form, and any `SKILL_NAME` given — and check the resolved root for an existing match. On a match, STOP and ask the user: "`<skill-name>` already exists. Choose: (1) Update/Fold-in (Mode 4), (2) verify the existing skill is complete and stop, or (3) force full regeneration." Do not re-extract until the user chooses. On context recovery after an interrupted run (network cut-off, replayed or continued conversation), reuse the extraction work directory that run reported (`Workdir ->` in its output, or the path you set in `BOOK_SKILL_WORKDIR`) **only if it is still intact and still matches the current inputs and options** — the directory exists, its `metadata.json` is readable, the `sources` it lists match the files being converted now one-to-one on filename **and content fingerprint** (the extractor records a per-source `sha256` in `metadata.json`; recompute the fingerprint from each file as it exists now and require an exact match — `reuse_is_safe()` in `book_to_skill/utils.py` is the executable form of this check), and its recorded `extraction_mode` is the mode this run is using (Step 2's "confirm the extraction is the document you asked for" rule). If it is missing (temp cleanup), its `metadata.json` is gone, the sources no longer match (a different filename, or a changed content fingerprint), the recorded metadata has no `sha256` for a source (recorded before fingerprints existed, so freshness cannot be established), or the mode differs, say so and start a fresh extraction instead of resuming. When in doubt, ask the user before discarding or resuming.
+
+---
+
+## Step 0.5 — Possession confirmation (mandatory)
+
+Before reading, extracting, or analyzing any source (every mode except Mode 3), ask once for all `INPUT_PATHS` and wait for the answer:
+
+> "Before I read these sources: is any of them copyrighted by someone other than you (e.g. a published book)? If so, you must have a copy of each such work, physical or digital, in your possession right now.
+>
+> 1. **Yes, I have a copy** of each copyrighted work in my possession right now
+> 2. **Not copyrighted** — my own writing, public domain, or openly licensed material
+> 3. **No, I don't have a copy**"
+
+- Option 1 → record `POSSESSION_CONFIRMED=yes` and continue.
+- Option 2 → record which basis applies and continue. Do not pick this option on the user's behalf: treat a published book as copyrighted unless the user says otherwise.
+- Option 3, silence, or an ambiguous reply → re-ask once; if still not option 1 or 2, STOP without extracting and say the conversion requires a copy in the user's possession.
+
+No flag, environment variable, or earlier answer in another run skips this question. It does not replace Step 11's copyright gate.
 
 ---
 
